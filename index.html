@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Rivers: Stunting, Nepal, and Bangladesh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FAFBF8;
+    --sage:#7C9473;
+    --sage-pale:#E8EDE3;
+    --moss:#3F4F39;
+    --moss-deep:#2C3829;
+    --blue:#A8C5D6;
+    --blue-pale:#DCE9EF;
+    --terra:#C97A4A;
+    --terra-pale:#F3E0D2;
+    --line:#CBD6C4;
+    --shadow: 0 8px 30px rgba(63,79,57,0.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  section[id]{scroll-margin-top:78px;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--white);
+    color:var(--moss-deep);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    letter-spacing:-0.01em;
+    color:var(--moss-deep);
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+
+  /* ===== reduced motion ===== */
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ===== Skip link ===== */
+  .skip-link{
+    position:absolute; left:-9999px; top:0; background:var(--moss-deep); color:var(--white);
+    padding:10px 18px; z-index:200; border-radius:0 0 8px 0;
+  }
+  .skip-link:focus{left:0;}
+
+  /* ===== Focus visibility ===== */
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+    outline:3px solid var(--terra);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  /* ===== TOP NAV / SIDEBAR TOGGLE ===== */
+  .topbar{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px;
+    background:rgba(250,251,248,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand-mark{
+    width:30px;height:30px;flex-shrink:0;
+  }
+  .menu-btn{
+    display:flex; align-items:center; gap:10px;
+    background:var(--moss); color:var(--white);
+    border:none; padding:10px 18px; border-radius:30px;
+    font-family:'Inter',sans-serif; font-weight:600; font-size:0.92rem;
+    cursor:pointer; transition:background 0.2s ease, transform 0.15s ease;
+  }
+  .menu-btn:hover{background:var(--moss-deep); transform:translateY(-1px);}
+  .menu-btn svg{width:18px;height:18px;}
+
+  /* ===== SIDEBAR ===== */
+  .sidebar-overlay{
+    position:fixed; inset:0; background:rgba(44,56,41,0.35);
+    opacity:0; pointer-events:none; transition:opacity 0.3s ease;
+    z-index:150;
+  }
+  .sidebar-overlay.open{opacity:1; pointer-events:auto;}
+
+  .sidebar{
+    position:fixed; top:0; right:0; height:100%; width:340px; max-width:88vw;
+    background:var(--sage-pale);
+    border-left:1px solid var(--line);
+    z-index:160;
+    transform:translateX(100%);
+    transition:transform 0.35s cubic-bezier(.2,.9,.25,1);
+    display:flex; flex-direction:column;
+    box-shadow:-12px 0 40px rgba(44,56,41,0.15);
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sidebar-head{
+    padding:24px 24px 18px; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:flex-start;
+  }
+  .sidebar-head h3{font-size:1.3rem; line-height:1.2;}
+  .sidebar-head p{font-size:0.85rem; color:var(--sage); margin-top:4px;}
+  .sidebar-close{
+    background:none;border:none;cursor:pointer;font-size:1.4rem;color:var(--moss);
+    line-height:1; padding:4px;
+  }
+  .sidebar-nav{padding:14px 12px; overflow-y:auto; flex:1;}
+  .sidebar-nav a{
+    display:flex; align-items:center; gap:14px;
+    padding:13px 14px; border-radius:12px;
+    text-decoration:none; font-weight:600; font-size:0.97rem;
+    color:var(--moss-deep);
+    transition:background 0.18s ease, padding-left 0.18s ease;
+  }
+  .sidebar-nav a:hover{background:rgba(124,148,115,0.18); padding-left:18px;}
+  .sidebar-nav .emoji{font-size:1.3rem; width:28px; text-align:center;}
+  .sidebar-nav .nav-sub{display:block; font-size:0.76rem; font-weight:400; color:var(--sage); margin-top:1px;}
+  .sidebar-foot{
+    padding:18px 24px; border-top:1px solid var(--line);
+    font-size:0.78rem; color:var(--sage);
+  }
+
+  /* ===== Layout helpers ===== */
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px;}
+  section{position:relative;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; letter-spacing:0.08em;
+    text-transform:uppercase; color:#5C7253; font-weight:600;
+  }
+
+  /* ===== HERO ===== */
+  .hero{
+    padding-top:150px;
+    padding-bottom:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 85% 0%, rgba(168,197,214,0.28), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 5% 10%, rgba(124,148,115,0.16), transparent 55%);
+  }
+  .hero-inner{
+    max-width:760px;
+    text-align:left;
+  }
+  .hero-title{
+    font-size:clamp(2.6rem, 6vw, 4.4rem);
+    line-height:0.98;
+    margin-top:18px;
+    margin-bottom:24px;
+  }
+  .hero-sub{
+    font-size:1.18rem;
+    color:#54614C;
+    max-width:600px;
+    margin-bottom:34px;
+  }
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap; margin-bottom:50px;}
+  .btn-primary{
+    background:var(--moss-deep); color:var(--white);
+    padding:14px 26px; border-radius:30px; text-decoration:none;
+    font-weight:600; font-size:0.96rem;
+    transition:background 0.2s ease, transform 0.15s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{background:var(--sage); transform:translateY(-2px);}
+  .btn-ghost{
+    border:1.5px solid var(--line); color:var(--moss-deep);
+    padding:14px 26px; border-radius:30px; text-decoration:none;
+    font-weight:600; font-size:0.96rem;
+    transition:border-color 0.2s ease, background 0.2s ease;
+    display:inline-block;
+  }
+  .btn-ghost:hover{border-color:var(--sage); background:var(--sage-pale);}
+
+  /* ===== RIVER CHART (signature element) ===== */
+  .river-chart{
+    width:100%;
+    background:linear-gradient(180deg, transparent, var(--sage-pale) 75%);
+    padding:30px 0 0;
+  }
+  .river-svg{width:100%; height:auto; display:block;}
+  .grid-line{stroke:var(--line); stroke-width:1; stroke-dasharray:2 6;}
+  .line-nepal{
+    stroke:var(--sage); stroke-width:4; stroke-linecap:round;
+    stroke-dasharray:1000; stroke-dashoffset:1000;
+    animation:draw-line 2.4s 0.3s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .line-bangladesh{
+    stroke:var(--terra); stroke-width:4; stroke-linecap:round;
+    stroke-dasharray:1000; stroke-dashoffset:1000;
+    animation:draw-line 2.4s 0.6s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  @keyframes draw-line{ to{ stroke-dashoffset:0; } }
+  .dot-nepal{fill:var(--sage); opacity:0; animation:dot-in 0.4s 2.4s forwards;}
+  .dot-bd{fill:var(--terra); opacity:0; animation:dot-in 0.4s 2.7s forwards;}
+  @keyframes dot-in{ to{opacity:1;} }
+  .chart-label{
+    font-family:'JetBrains Mono',monospace; font-size:13.5px; font-weight:600;
+    opacity:0; animation:label-in 0.5s 2.6s forwards;
+  }
+  @keyframes label-in{ to{opacity:1;} }
+  .nepal-label{fill:#5C7253;}
+  .bd-label{fill:#A8602F;}
+
+  @media (prefers-reduced-motion: reduce){
+    .line-nepal, .line-bangladesh{stroke-dashoffset:0; animation:none;}
+    .dot-nepal, .dot-bd, .chart-label{opacity:1; animation:none;}
+  }
+
+  @media (max-width: 640px){
+    .hero{padding-top:120px;}
+    .hero-cta{flex-direction:column; align-items:flex-start;}
+    .river-svg{height:340px;}
+    .chart-label{font-size:15px;}
+  }
+
+  /* ===== CONTENT BANDS ===== */
+  .band{
+    padding:90px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .band:nth-of-type(odd){background:var(--white);}
+  .band.alt{background:var(--sage-pale);}
+  .section-title{
+    font-size:clamp(1.7rem, 3.4vw, 2.4rem);
+    margin-top:14px;
+    max-width:680px;
+    line-height:1.15;
+  }
+  .section-lede{
+    font-size:1.05rem; color:#54614C; max-width:680px; margin-top:18px;
+  }
+
+  .pillar-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+    margin-top:46px;
+  }
+  .pillar-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:26px 22px;
+    transition:transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .pillar-card:hover{transform:translateY(-4px); box-shadow:var(--shadow); border-color:var(--sage);}
+  .pillar-emoji{font-size:1.8rem; display:block; margin-bottom:14px;}
+  .pillar-card h3{font-size:1.08rem; margin-bottom:8px;}
+  .pillar-card p{font-size:0.92rem; color:#5C6A55;}
+
+  @media (max-width: 880px){
+    .pillar-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width: 540px){
+    .pillar-grid{grid-template-columns:1fr;}
+    .band{padding:60px 0;}
+  }
+
+  /* ===== TWO COLUMN DEEP-DIVE SECTIONS ===== */
+  .two-col{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:60px;
+    align-items:center;
+  }
+  .two-col.reverse{grid-template-columns:1fr 1.3fr;}
+  .two-col.reverse .col-stat{order:1;}
+  .two-col.reverse .col-text{order:2;}
+  .col-text p{color:#54614C; margin-top:16px; font-size:1.02rem;}
+  .col-text p:first-of-type{margin-top:18px;}
+  .col-text strong{color:var(--moss-deep);}
+
+  .col-stat{display:flex; flex-direction:column; gap:18px;}
+  .stat-block{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-left:4px solid var(--sage);
+    border-radius:4px 16px 16px 4px;
+    padding:22px 24px;
+  }
+  .band.alt .stat-block{background:var(--white);}
+  .stat-num{
+    display:block; font-size:1.9rem; font-weight:700; color:var(--moss-deep);
+    margin-bottom:6px;
+  }
+  .stat-label{font-size:0.88rem; color:#5C6A55; line-height:1.45;}
+
+  @media (max-width: 880px){
+    .two-col, .two-col.reverse{grid-template-columns:1fr; gap:30px;}
+    .two-col.reverse .col-stat{order:2;}
+    .two-col.reverse .col-text{order:1;}
+  }
+
+  /* ===== BANGLADESH SECTION ===== */
+  .bd-band{
+    background:
+      radial-gradient(ellipse 800px 400px at 90% 0%, rgba(201,122,74,0.07), transparent 60%),
+      var(--white);
+  }
+  .eyebrow-terra{color:#9A5A2E;}
+  .bd-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+    margin-top:44px;
+  }
+  .bd-card{
+    background:var(--terra-pale);
+    border-radius:16px;
+    padding:22px 20px;
+    border:1px solid rgba(201,122,74,0.25);
+  }
+  .bd-tag{
+    font-family:'JetBrains Mono',monospace; font-size:0.74rem; font-weight:600;
+    text-transform:uppercase; letter-spacing:0.04em;
+    color:#9A5A2E; background:rgba(255,255,255,0.75);
+    padding:5px 10px; border-radius:20px; display:inline-block;
+  }
+  .bd-card p{font-size:0.92rem; color:#6B4A30; margin-top:14px; line-height:1.5;}
+
+  .bd-stats-row{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+    margin-top:34px;
+    padding-top:34px;
+    border-top:1px solid var(--line);
+  }
+  .bd-stat span{
+    font-size:2rem; font-weight:700; color:var(--terra); display:block;
+  }
+  .bd-stat p{font-size:0.84rem; color:#5C6A55; margin-top:6px;}
+
+  @media (max-width: 880px){
+    .bd-grid{grid-template-columns:repeat(2,1fr);}
+    .bd-stats-row{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width: 540px){
+    .bd-grid{grid-template-columns:1fr;}
+    .bd-stats-row{grid-template-columns:1fr 1fr;}
+  }
+
+  /* ===== COMPARE TABLE ===== */
+  .compare-table{
+    margin-top:44px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    background:var(--white);
+  }
+  .ct-row{
+    display:grid; grid-template-columns:1.1fr 1fr 1fr;
+    padding:18px 22px;
+    border-bottom:1px solid var(--line);
+    align-items:center;
+    gap:16px;
+  }
+  .ct-row:last-child{border-bottom:none;}
+  .ct-head{background:var(--sage-pale); font-weight:600;}
+  .ct-flag{font-size:1.02rem;}
+  .ct-label{font-weight:600; font-size:0.92rem; color:var(--moss-deep);}
+  .ct-row > div:not(.ct-label){font-size:0.92rem; color:#54614C;}
+  .ct-row .mono{font-family:'JetBrains Mono',monospace; font-weight:600; color:var(--sage);}
+  .ct-row:nth-child(even):not(.ct-head){background:rgba(124,148,115,0.04);}
+
+  @media (max-width:700px){
+    .ct-row{grid-template-columns:1fr; gap:4px; padding:16px 18px;}
+    .ct-label{margin-bottom:2px;}
+    .ct-head{display:none;}
+    .ct-row > div:nth-child(2)::before{content:"🇳🇵 "; }
+    .ct-row > div:nth-child(3)::before{content:"🇧🇩 "; }
+  }
+
+  /* ===== TRANSLATE GRID ===== */
+  .translate-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+    margin-top:44px;
+  }
+  .t-card{
+    border-radius:18px; padding:28px 26px;
+    border:1px solid var(--line);
+  }
+  .t-can{background:var(--sage-pale); border-color:rgba(124,148,115,0.3);}
+  .t-cannot{background:var(--blue-pale); border-color:rgba(168,197,214,0.5);}
+  .t-icon{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:34px; height:34px; border-radius:50%;
+    font-weight:700; font-size:1.05rem; margin-bottom:14px;
+  }
+  .t-can .t-icon{background:var(--sage); color:white;}
+  .t-cannot .t-icon{background:var(--blue); color:var(--moss-deep);}
+  .t-card h3{font-size:1.12rem; margin-bottom:10px;}
+  .t-card p{font-size:0.94rem; color:#54614C;}
+
+  @media (max-width:880px){
+    .translate-grid{grid-template-columns:1fr;}
+  }
+
+  /* ===== SOURCES ===== */
+  .sources-band{border-bottom:none; padding-bottom:0;}
+  .source-list{
+    margin-top:34px; list-style:none; display:flex; flex-direction:column; gap:14px;
+  }
+  .source-list li{
+    font-size:0.92rem; color:#54614C;
+    padding-left:20px; position:relative;
+  }
+  .source-list li::before{
+    content:"—"; position:absolute; left:0; color:var(--sage);
+  }
+  .source-list a{color:var(--sage); text-decoration:underline; text-decoration-color:rgba(124,148,115,0.4);}
+  .source-list a:hover{text-decoration-color:var(--sage);}
+
+  /* ===== WAVE FOOTER ===== */
+  .wave-footer{
+    position:relative;
+    background:var(--moss-deep);
+    padding-top:140px;
+    overflow:hidden;
+  }
+  .wave-svg{
+    position:absolute; top:0; left:0; width:100%; height:160px;
+    transform:translateY(-1px);
+  }
+  .wave-back{
+    fill:var(--sage);
+    opacity:0.55;
+    animation:wave-drift-1 13s ease-in-out infinite;
+  }
+  .wave-front{
+    fill:var(--moss-deep);
+    animation:wave-drift-2 9s ease-in-out infinite;
+  }
+  @keyframes wave-drift-1{
+    0%,100%{ transform:translateX(0) translateY(0); }
+    50%{ transform:translateX(-2%) translateY(6px); }
+  }
+  @keyframes wave-drift-2{
+    0%,100%{ transform:translateX(0) translateY(0); }
+    50%{ transform:translateX(2%) translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .wave-back, .wave-front{animation:none;}
+  }
+  .footer-inner{
+    padding:50px 0 60px;
+    text-align:center;
+  }
+  .footer-line{
+    font-family:'Fraunces',serif; font-size:clamp(1.1rem,2.4vw,1.5rem);
+    color:var(--white); max-width:640px; margin:0 auto 18px;
+    font-weight:400; line-height:1.4; font-style:italic;
+  }
+  .footer-credit{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem;
+    color:rgba(255,255,255,0.55); letter-spacing:0.02em;
+  }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 30 30" fill="none">
+      <path d="M15 2C15 2 6 10 6 18C6 23 10 27 15 27C20 27 24 23 24 18C24 10 15 2 15 2Z" fill="#7C9473" stroke="#3F4F39" stroke-width="1.2"/>
+      <path d="M15 9C15 9 11 13.5 11 18C11 20.5 12.8 22.5 15 22.5C17.2 22.5 19 20.5 19 18C19 13.5 15 9 15 9Z" fill="#A8C5D6" opacity="0.7"/>
+    </svg>
+    Two Rivers
+  </div>
+  <button class="menu-btn" id="menuToggle" aria-expanded="false" aria-controls="sidebar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+    Explore
+  </button>
+</div>
+
+<!-- ============ SIDEBAR ============ -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<nav class="sidebar" id="sidebar" aria-label="Section navigation">
+  <div class="sidebar-head">
+    <div>
+      <h3>Explore the story</h3>
+      <p>Jump to any section</p>
+    </div>
+    <button class="sidebar-close" id="sidebarClose" aria-label="Close menu">✕</button>
+  </div>
+  <div class="sidebar-nav">
+    <a href="#hero"><span class="emoji">🌱</span><span>Start here<span class="nav-sub">The two rivers</span></span></a>
+    <a href="#nepal-overview"><span class="emoji">🏔️</span><span>Nepal's turnaround<span class="nav-sub">1996 → 2022</span></span></a>
+    <a href="#health"><span class="emoji">🏥</span><span>Health systems<span class="nav-sub">Workers, policy, care</span></span></a>
+    <a href="#education"><span class="emoji">📚</span><span>Education<span class="nav-sub">Schooling & later marriage</span></span></a>
+    <a href="#sanitation"><span class="emoji">💧</span><span>Sanitation<span class="nav-sub">CLTS & toilets</span></span></a>
+    <a href="#poverty"><span class="emoji">🌾</span><span>Poverty & food<span class="nav-sub">Remittances & diet</span></span></a>
+    <a href="#bangladesh"><span class="emoji">🍚</span><span>Bangladesh today<span class="nav-sub">Progress, stalled</span></span></a>
+    <a href="#compare"><span class="emoji">🍎</span><span>Side by side<span class="nav-sub">Data comparison</span></span></a>
+    <a href="#translate"><span class="emoji">🥭</span><span>What can transfer<span class="nav-sub">Lessons for Bangladesh</span></span></a>
+    <a href="#sources"><span class="emoji">🌿</span><span>Sources</span></a>
+  </div>
+  <div class="sidebar-foot">Built from primary research on childhood stunting interventions, 2024–2026.</div>
+</nav>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero">
+  <div class="wrap hero-inner">
+    <p class="eyebrow">A comparative case study · childhood nutrition</p>
+    <h1 class="hero-title">Two rivers,<br>one destination.</h1>
+    <p class="hero-sub">Nepal cut childhood stunting nearly in half over two decades. Bangladesh has made real progress too — then stalled. This is the story of what one country got right, and what the other can still borrow.</p>
+    <div class="hero-cta">
+      <a href="#nepal-overview" class="btn-primary">See how Nepal did it ↓</a>
+      <a href="#compare" class="btn-ghost">Jump to the data</a>
+    </div>
+  </div>
+
+  <div class="river-chart" role="img" aria-label="Line chart: Nepal's child stunting rate fell smoothly from 57% in 1996 to 25% in 2022, while Bangladesh's rate fell from 51% in 2004 but slowed and stalled near 24% by 2022.">
+    <svg viewBox="0 0 760 260" preserveAspectRatio="xMidYMid meet" class="river-svg">
+      <line x1="0" y1="35" x2="700" y2="35" class="grid-line"/>
+      <line x1="0" y1="225" x2="700" y2="225" class="grid-line"/>
+
+      <path class="line-bangladesh" d="M 30,225 C 137.7,225 137.7,175.0 245.4,175.0 C 285.8,175.0 285.8,135.0 326.2,135.0 C 380.0,135.0 380.0,125.0 433.8,125.0 C 474.2,125.0 474.2,105.0 514.6,105.0 C 568.45,105.0 568.45,75.0 622.3,75.0 C 646.15,75.0 676.15,40.0 700.0,40.0" fill="none"/>
+
+      <path class="line-nepal" d="M 30,205 C 97.3,205 97.3,175.0 164.6,175.0 C 231.9,175.0 231.9,135.0 299.2,135.0 C 366.5,135.0 366.5,125.0 433.8,125.0 C 501.15,125.0 501.15,100.0 568.5,100.0 C 649.25,100.0 649.25,45.0 700.0,45.0" fill="none"/>
+
+      <circle cx="30" cy="205" r="5" class="dot-nepal"/>
+      <circle cx="700" cy="45" r="6" class="dot-nepal"/>
+      <circle cx="30" cy="225" r="5" class="dot-bd"/>
+      <circle cx="700" cy="40" r="6" class="dot-bd"/>
+
+      <text x="36" y="195" class="chart-label nepal-label">Nepal · 57%, 1996</text>
+      <text x="430" y="100" class="chart-label nepal-label">Nepal · 25%, 2022</text>
+      <text x="36" y="245" class="chart-label bd-label">Bangladesh · 51%, 2004</text>
+      <text x="400" y="170" class="chart-label bd-label">Bangladesh stalls near 24%</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ============ NEPAL OVERVIEW ============ -->
+<section id="nepal-overview" class="band">
+  <div class="wrap">
+    <p class="eyebrow">🏔️ Part One</p>
+    <h2 class="section-title">Nepal didn't fix one thing. It fixed five.</h2>
+    <p class="section-lede">Between the mid-1990s and 2016, Nepal reduced childhood stunting despite poverty, political instability, rugged terrain, and thin infrastructure. No single program did that. It took simultaneous progress on healthcare, education, sanitation, women's empowerment, and household income — each reinforcing the others.</p>
+
+    <div class="pillar-grid">
+      <div class="pillar-card">
+        <span class="pillar-emoji">🏥</span>
+        <h3>Health systems</h3>
+        <p>New facilities, a nationwide community health worker corps, and the 1991 National Health Policy's evidence-based push on maternal and child care.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-emoji">📚</span>
+        <h3>Education</h3>
+        <p>The 1992 Basic Primary Education Program enrolled over a million more children, closing the gender gap and delaying early childbearing.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-emoji">💧</span>
+        <h3>Sanitation</h3>
+        <p>Community-Led Total Sanitation flipped open defecation rates, slashing diarrhea and respiratory infection — two direct drivers of stunting.</p>
+      </div>
+      <div class="pillar-card">
+        <span class="pillar-emoji">🌾</span>
+        <h3>Poverty & remittances</h3>
+        <p>Labor migration sent home remittances worth a quarter of GDP, funding more nutritious diets and better health-seeking behavior.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HEALTH ============ -->
+<section id="health" class="band alt">
+  <div class="wrap two-col">
+    <div class="col-text">
+      <p class="eyebrow">🏥 Health systems</p>
+      <h2 class="section-title">Policy gave health workers a mandate. Mothers responded.</h2>
+      <p>Health care spending in Nepal rose sharply starting in the mid-1990s, paying for new facilities and a nationwide community health worker cadre. The 1991 National Health Policy gave that workforce something to execute against: evidence-based priorities for maternal and child health.</p>
+      <p>The result wasn't just more clinics — it was a shift in behavior. More mothers sought skilled care during pregnancy and delivery, and adopted new child care and feeding practices. <strong>Stunting fell 47% since 1995</strong> as that behavior change compounded year over year.</p>
+    </div>
+    <div class="col-stat">
+      <div class="stat-block">
+        <span class="stat-num mono">47%</span>
+        <span class="stat-label">decline in stunting since 1995, traced to improved maternal & child health-seeking behavior</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-num mono">1991</span>
+        <span class="stat-label">National Health Policy — the year evidence-based care became a national mandate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EDUCATION ============ -->
+<section id="education" class="band">
+  <div class="wrap two-col reverse">
+    <div class="col-stat">
+      <div class="stat-block">
+        <span class="stat-num mono">0.45 → 1.08</span>
+        <span class="stat-label">girls-to-boys ratio in primary school, 1985 to 2016 — gender parity, achieved</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-num mono">1M+</span>
+        <span class="stat-label">additional children enrolled in primary school under the Basic Primary Education Program</span>
+      </div>
+    </div>
+    <div class="col-text">
+      <p class="eyebrow">📚 Education</p>
+      <h2 class="section-title">A generation of girls stayed in school. That alone moved the numbers.</h2>
+      <p>In the 1990s, Nepal faced dismal primary enrollment and youth literacy, especially for girls. The government responded by decentralizing and investing in education infrastructure. The 1992 Basic Primary Education Program (BPEP) built new schools, enrolled over a million more children, and — alongside donor support — closed the primary-school gender gap almost entirely.</p>
+      <p>The downstream effect on stunting is direct: more educated girls become parents later. Later childbearing lowers the risk of preterm birth, intrauterine growth restriction, infant mortality, and undernutrition in the next generation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SANITATION ============ -->
+<section id="sanitation" class="band alt">
+  <div class="wrap two-col">
+    <div class="col-text">
+      <p class="eyebrow">💧 Sanitation</p>
+      <h2 class="section-title">Nepal stopped supplying toilets and started building demand for them.</h2>
+      <p>Earlier sanitation efforts focused on supply — building toilets and hoping people would use them. <strong>Community-Led Total Sanitation (CLTS)</strong>, an NGO-led approach, flipped that: it generated grassroots demand instead, and the shift was dramatic. Communities that were roughly three-quarters open-defecating became roughly three-quarters toilet-using.</p>
+      <p>That single behavioral shift cut transmission of diarrhea and pneumonia — two of the most direct drivers of stunted growth in early childhood. In 2011, Nepal layered on a Total Behavior Change approach, keeping CLTS's core demand-generation but adding targeted subsidies.</p>
+    </div>
+    <div class="col-stat">
+      <div class="stat-block">
+        <span class="stat-num mono">20% → 8%</span>
+        <span class="stat-label">diarrhea incidence, 2001 to 2016</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-num mono">23% → 2%</span>
+        <span class="stat-label">acute respiratory infection incidence, 2001 to 2016</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ POVERTY ============ -->
+<section id="poverty" class="band">
+  <div class="wrap two-col reverse">
+    <div class="col-stat">
+      <div class="stat-block">
+        <span class="stat-num mono">~25%</span>
+        <span class="stat-label">of Nepal's GDP came from remittances sent home by labor migrants</span>
+      </div>
+    </div>
+    <div class="col-text">
+      <p class="eyebrow">🌾 Poverty & household income</p>
+      <h2 class="section-title">Money sent home bought better food.</h2>
+      <p>Economic growth and a steady flow of remittances pulled Nepalis out of poverty and raised disposable household income — income that went toward more nutritious food. Labor migrants abroad sent home remittances worth about a quarter of national GDP, complementing increasingly pro-poor government policy.</p>
+      <p>That income translated into higher food security, better diet quality, and more health-seeking behavior — the same behaviors the health and education investments were also driving. The pieces reinforced each other rather than operating in isolation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BANGLADESH ============ -->
+<section id="bangladesh" class="band bd-band">
+  <div class="wrap">
+    <p class="eyebrow eyebrow-terra">🍚 Part Two</p>
+    <h2 class="section-title">Bangladesh has the playbook. It doesn't have the conditions.</h2>
+    <p class="section-lede">Bangladesh cut stunting from roughly 60% in the mid-1990s to around 24% today — real, hard-won progress. But the rate of decline has slowed well below the pace needed to hit global targets, and the reasons trace back to the same five pillars that worked for Nepal: this time, each one is under strain.</p>
+
+    <div class="bd-grid">
+      <div class="bd-card">
+        <div class="bd-card-top">
+          <span class="bd-tag">Political stability</span>
+        </div>
+        <p>The 2024 ousting of Prime Minister Sheikh Hasina left the government rebuilding nutrition programs from scratch mid-transition — exactly when consistency matters most.</p>
+      </div>
+      <div class="bd-card">
+        <div class="bd-card-top">
+          <span class="bd-tag">Food security</span>
+        </div>
+        <p>Inflation hit a record 14.1%, making micronutrient-dense diets — and in many households, food at all — harder to afford.</p>
+      </div>
+      <div class="bd-card">
+        <div class="bd-card-top">
+          <span class="bd-tag">Health infrastructure</span>
+        </div>
+        <p>Under 1% of GDP goes to healthcare. The public system underserves rural and poor populations; the private sector is unregulated, with high out-of-pocket costs.</p>
+      </div>
+      <div class="bd-card">
+        <div class="bd-card-top">
+          <span class="bd-tag">Foreign aid</span>
+        </div>
+        <p>Reduced international funding — including the U.S. withdrawal from the WHO, a major donor — has made nutrition program financing increasingly unreliable.</p>
+      </div>
+    </div>
+
+    <div class="bd-stats-row">
+      <div class="bd-stat"><span class="mono">24%</span><p>of children under 5 are stunted nationally</p></div>
+      <div class="bd-stat"><span class="mono">43%</span><p>stunting rate in Sylhet division — the most-affected region</p></div>
+      <div class="bd-stat"><span class="mono">40%</span><p>of the population lives below the poverty line</p></div>
+      <div class="bd-stat"><span class="mono">29.5%</span><p>of children 6–23 months get a minimum acceptable diet</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section id="compare" class="band alt">
+  <div class="wrap">
+    <p class="eyebrow">🍎 Side by side</p>
+    <h2 class="section-title">Same pillars, same inequality pattern, different outcome.</h2>
+    <p class="section-lede">Nepal started from a worse position — a higher stunting rate in the 1990s than Bangladesh had even at its peak. It still pulled further ahead. Both countries also show the same fault line: the burden concentrates in rural areas, poorer households, and families with less-educated parents.</p>
+
+    <div class="compare-table">
+      <div class="ct-row ct-head">
+        <div></div>
+        <div class="ct-flag">🇳🇵 Nepal</div>
+        <div class="ct-flag">🇧🇩 Bangladesh</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-label">Starting stunting rate</div>
+        <div class="mono">57% (1996)</div>
+        <div class="mono">51% (2004)</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-label">Most recent rate</div>
+        <div class="mono">25% (2022)</div>
+        <div class="mono">24% (2022)</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-label">Trajectory</div>
+        <div>Steady, accelerating decline</div>
+        <div>Early progress, recent plateau</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-label">Hardest-hit region</div>
+        <div>Karnali province — 33%</div>
+        <div>Sylhet division — 43%</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-label">Who's most affected</div>
+        <div>Rural, low-wealth, low-parent-education households</div>
+        <div>Rural, low-wealth, low-parent-education households</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-label">Key destabilizer</div>
+        <div>Largely overcame political instability via decentralized programs</div>
+        <div>2024 political transition disrupted program continuity</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRANSLATE ============ -->
+<section id="translate" class="band">
+  <div class="wrap">
+    <p class="eyebrow">🥭 What can transfer</p>
+    <h2 class="section-title">Three things Bangladesh can borrow — and one Nepal had that's harder to import.</h2>
+
+    <div class="translate-grid">
+      <div class="t-card t-can">
+        <span class="t-icon">✓</span>
+        <h3>Demand-driven sanitation</h3>
+        <p>CLTS-style programs that build local demand for toilets, rather than just supplying them, are not capital-intensive. Bangladesh already runs WASH initiatives — the Nepal model suggests doubling down on community-led demand generation specifically, not just infrastructure spend.</p>
+      </div>
+      <div class="t-card t-can">
+        <span class="t-icon">✓</span>
+        <h3>A dedicated community health worker cadre</h3>
+        <p>Nepal's 1991 policy succeeded partly because it gave health workers a clear, evidence-based mandate — not just more funding. Bangladesh's underserved rural public sector could see outsized returns from a similarly structured, mandate-driven workforce rather than only added spending.</p>
+      </div>
+      <div class="t-card t-can">
+        <span class="t-icon">✓</span>
+        <h3>Keep girls in school, deliberately</h3>
+        <p>Nepal's gender parity gains weren't incidental — they came from a named program (BPEP) with enrollment targets. Bangladesh's existing girls'-education initiatives could adopt the same explicit, tracked-target structure.</p>
+      </div>
+      <div class="t-card t-cannot">
+        <span class="t-icon">△</span>
+        <h3>Political continuity</h3>
+        <p>Nepal's multisectoral approach worked partly because it had roughly two uninterrupted decades to compound. Bangladesh's 2024 transition is a reminder that program design can be copied — political stability cannot be, and it may be the single largest variable separating the two trajectories.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section id="sources" class="band sources-band">
+  <div class="wrap">
+    <p class="eyebrow">🌿 Sources</p>
+    <h2 class="section-title">Where this came from</h2>
+    <p class="section-lede">Drawn from research compiled by Prithika Poomaran, Sharini Rao, Zen Huang, Maggie Chen, and Giuliana Mendez, alongside national demographic and health survey data for Nepal and Bangladesh.</p>
+    <ul class="source-list">
+      <li>Thelwell, K. (2024, May 30). <em>Fighting childhood stunting in Bangladesh.</em> The Borgen Project. <a href="https://borgenproject.org/childhood-stunting-in-bangladesh/" target="_blank" rel="noopener">borgenproject.org</a></li>
+      <li>Bangladesh Demographic and Health Surveys (BDHS), various years</li>
+      <li>Nepal Demographic and Health Surveys (NDHS), various years</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ WAVE FOOTER ============ -->
+<footer class="wave-footer">
+  <svg viewBox="0 0 1200 220" preserveAspectRatio="none" class="wave-svg">
+    <path class="wave-back" d="M0,90 C150,150 350,30 600,90 C850,150 1050,30 1200,90 L1200,220 L0,220 Z"></path>
+    <path class="wave-front" d="M0,120 C200,60 400,170 600,120 C800,70 1000,170 1200,120 L1200,220 L0,220 Z"></path>
+  </svg>
+  <div class="wrap footer-inner">
+    <p class="footer-line">The river that flows steadily wins. The one that stalls, doesn't lose — it just has further to go.</p>
+    <p class="footer-credit">Two Rivers · A comparative study on childhood stunting in Nepal & Bangladesh</p>
+  </div>
+</footer>
+
+
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const closeBtn = document.getElementById('sidebarClose');
+
+  function openSidebar(){
+    sidebar.classList.add('open');
+    overlay.classList.add('open');
+    menuToggle.setAttribute('aria-expanded','true');
+  }
+  function closeSidebar(){
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded','false');
+  }
+  menuToggle.addEventListener('click', () => {
+    sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+  });
+  closeBtn.addEventListener('click', closeSidebar);
+  overlay.addEventListener('click', closeSidebar);
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.addEventListener('click', closeSidebar));
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeSidebar(); });
+</script>
+
+</body>
+</html>
