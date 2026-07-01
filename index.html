@@ -573,6 +573,83 @@
     .translate-grid{grid-template-columns:1fr;}
   }
 
+  /* ===== SIMILARITY BAR ===== */
+  .similarity-bar{
+    display:flex; flex-wrap:wrap; gap:10px 20px;
+    margin-top:22px; padding:16px 20px;
+    background:var(--white); border:1px solid var(--line); border-radius:14px;
+    align-items:center;
+  }
+  .sim-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.75rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:#5C7253;
+    margin-right:6px;
+  }
+  .sim-item{font-size:0.88rem; color:#54614C;}
+
+  /* ===== WHY IT WORKED ===== */
+  .why-worked{
+    margin-top:16px !important;
+    background:var(--sage-pale);
+    border-radius:10px;
+    padding:14px 16px;
+    font-size:0.92rem !important;
+    color:#3F4F39 !important;
+    line-height:1.55 !important;
+  }
+  .why-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:#5C7253;
+    display:inline-block; margin-bottom:6px;
+  }
+
+  /* ===== START HERE BOX ===== */
+  .start-here-box{
+    margin-top:32px;
+    background:var(--moss-deep);
+    border-radius:16px;
+    padding:26px 28px;
+    display:flex; gap:16px; align-items:flex-start;
+  }
+  .start-here-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:700;
+    color:var(--blue); text-transform:uppercase; letter-spacing:0.05em;
+    white-space:nowrap; padding-top:2px;
+  }
+  .start-here-box p{color:rgba(250,251,248,0.88); font-size:0.95rem; line-height:1.55; margin:0 !important;}
+  .start-here-box strong{color:var(--white);}
+
+  /* ===== DEVIL'S ADVOCATE ===== */
+  .da-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+    margin-top:44px;
+  }
+  .da-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:24px 22px;
+  }
+  .da-head{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .da-icon{font-size:1.2rem;}
+  .da-head h3{font-size:1.02rem; color:var(--moss-deep);}
+  .da-problem{font-size:0.92rem; color:#54614C; line-height:1.5; margin-bottom:14px;}
+  .da-counter{
+    font-size:0.9rem; color:#3F4F39; line-height:1.5;
+    background:var(--sage-pale); border-radius:8px; padding:12px 14px;
+  }
+  .da-counter-label{
+    font-family:'JetBrains Mono',monospace; font-size:0.7rem; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.06em; color:#5C7253;
+    display:block; margin-bottom:5px;
+  }
+
+  @media(max-width:880px){
+    .da-grid{grid-template-columns:1fr;}
+    .start-here-box{flex-direction:column; gap:8px;}
+    .similarity-bar{flex-direction:column; gap:8px;}
+  }
+
   /* ===== INTERVIEWS (placeholder) ===== */
   .quote-grid{
     display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
@@ -727,6 +804,7 @@
     <a href="#summary"><span class="emoji">🌱</span><span>Where things stand<span class="nav-sub">Summary & next steps</span></span></a>
     <a href="#compare"><span class="emoji">🍎</span><span>Side by side<span class="nav-sub">Data comparison</span></span></a>
     <a href="#translate"><span class="emoji">🥭</span><span>What can transfer<span class="nav-sub">Lessons for Bangladesh</span></span></a>
+    <a href="#limitations"><span class="emoji">⚖️</span><span>Devil's advocate<span class="nav-sub">Limits of Nepal's model</span></span></a>
     <a href="#interviews"><span class="emoji">🎤</span><span>Voices from the field<span class="nav-sub">Andrew Mertens, UC Berkeley</span></span></a>
     <a href="#sources"><span class="emoji">🌿</span><span>Sources</span></a>
   </div>
@@ -807,6 +885,15 @@
     <p class="eyebrow">📅 Historical context</p>
     <h2 class="section-title">Forty years of policy, side by side.</h2>
     <p class="section-lede">Both countries were legislating, building, and experimenting at the same time — often with the same problems, through different institutions. Scroll to explore. Click any event for detail.</p>
+
+    <div class="similarity-bar">
+      <span class="sim-label">Why compare these two?</span>
+      <span class="sim-item">🌾 Both agrarian, rice-dominant diets</span>
+      <span class="sim-item">💰 Similar GDP per capita in the 1990s (~$200–250)</span>
+      <span class="sim-item">👩 Shared cultural norms around early marriage & gender roles</span>
+      <span class="sim-item">🏥 Comparable starting stunting rates (~57% vs ~60%)</span>
+      <span class="sim-item">🗺️ Same rural/urban inequality pattern</span>
+    </div>
   </div>
 
   <div class="timeline-outer">
@@ -851,6 +938,7 @@
       <h2 class="section-title">Policy gave health workers a mandate. Mothers responded.</h2>
       <p>Health care spending in Nepal rose sharply starting in the mid-1990s, paying for new facilities and a nationwide community health worker cadre. The 1991 National Health Policy gave that workforce something to execute against: evidence-based priorities for maternal and child health.</p>
       <p>The result wasn't just more clinics — it was a shift in behavior. More mothers sought skilled care during pregnancy and delivery, and adopted new child care and feeding practices. <strong>Stunting fell 47% since 1995</strong> as that behavior change compounded year over year.</p>
+      <p class="why-worked"><span class="why-label">Why it worked</span> The policy paired a clear mandate with a trusted delivery channel — community health workers who were local women, known to the families they served. Funding from donors (World Bank, USAID) provided resources, but the behavioral uptake came from social trust, not money. Programs that invested only in infrastructure without changing behavior saw far smaller gains.</p>
     </div>
     <div class="col-stat">
       <div class="stat-block">
@@ -883,6 +971,7 @@
       <h2 class="section-title">A generation of girls stayed in school. That alone moved the numbers.</h2>
       <p>In the 1990s, Nepal faced dismal primary enrollment and youth literacy, especially for girls. The government responded by decentralizing and investing in education infrastructure. The 1992 Basic Primary Education Program (BPEP) built new schools, enrolled over a million more children, and — alongside donor support — closed the primary-school gender gap almost entirely.</p>
       <p>The downstream effect on stunting is direct: more educated girls become parents later. Later childbearing lowers the risk of preterm birth, intrauterine growth restriction, infant mortality, and undernutrition in the next generation.</p>
+      <p class="why-worked"><span class="why-label">Why it worked</span> BPEP tied funding to enrollment outcomes, not just school construction — a design choice that forced accountability for actual attendance. It also addressed the economic barrier directly: families pulled girls out of school because their labor was needed at home. Scholarships and stipends changed that calculation. The program worked because it treated the root cause (economic incentive to keep girls home) not just the symptom (low enrollment).</p>
     </div>
   </div>
 </section>
@@ -895,6 +984,7 @@
       <h2 class="section-title">Nepal stopped supplying toilets and started building demand for them.</h2>
       <p>Earlier sanitation efforts focused on supply — building toilets and hoping people would use them. <strong>Community-Led Total Sanitation (CLTS)</strong>, an NGO-led approach, flipped that: it generated grassroots demand instead, and the shift was dramatic. Communities that were roughly three-quarters open-defecating became roughly three-quarters toilet-using.</p>
       <p>That single behavioral shift cut transmission of diarrhea and pneumonia — two of the most direct drivers of stunted growth in early childhood. In 2011, Nepal layered on a Total Behavior Change approach, keeping CLTS's core demand-generation but adding targeted subsidies.</p>
+      <p class="why-worked"><span class="why-label">Why it worked</span> CLTS succeeded where supply-side programs had failed because it leveraged collective shame rather than individual incentive. When a whole community publicly commits to stopping open defecation, peer pressure sustains the behavior long after the NGO leaves. The 2011 Master Plan's key improvement: adding subsidies for the poorest households, who wanted to comply but couldn't afford materials — fixing the equity gap in pure CLTS without undermining its demand-driven logic.</p>
     </div>
     <div class="col-stat">
       <div class="stat-block">
@@ -923,6 +1013,7 @@
       <h2 class="section-title">Money sent home bought better food.</h2>
       <p>Economic growth and a steady flow of remittances pulled Nepalis out of poverty and raised disposable household income — income that went toward more nutritious food. Labor migrants abroad sent home remittances worth about a quarter of national GDP, complementing increasingly pro-poor government policy.</p>
       <p>That income translated into higher food security, better diet quality, and more health-seeking behavior — the same behaviors the health and education investments were also driving. The pieces reinforced each other rather than operating in isolation.</p>
+      <p class="why-worked"><span class="why-label">Why it worked</span> Remittances worked as a nutrition intervention because they reached households directly, bypassing government distribution systems that often failed to reach the poorest. But there's an important limitation: Nepal's remittance model depended on Gulf labor migration demand — a structural condition Bangladesh partially shares (it's also a large labor exporter) but cannot fully replicate on policy alone. The lesson isn't "send workers abroad"; it's that household income gains, however they arrive, drive nutrition outcomes when health systems are already in place to channel that improved behavior.</p>
     </div>
   </div>
 </section>
@@ -1093,6 +1184,55 @@
         <p>Nepal's multisectoral approach benefited from roughly two uninterrupted decades to compound. Bangladesh has already shown it can sustain progress for long stretches — recent continuity, after the 2024 transition, is the one factor that's harder to engineer directly through policy alone.</p>
       </div>
     </div>
+
+    <div class="start-here-box">
+      <span class="start-here-label">👆 Start here</span>
+      <p>For a country managing limited implementation bandwidth, the evidence points to two interventions that are lowest-cost, highest-leverage, and fastest to scale: <strong>demand-driven sanitation (CLTS)</strong> and <strong>a structured community health worker mandate</strong>. Both work through existing community infrastructure rather than requiring new institutions, and both show documented results within 3–5 years. The education and political continuity pieces are equally important long-term — but these two are where Bangladesh can move first, now.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEVIL'S ADVOCATE ============ -->
+<section id="limitations" class="band alt">
+  <div class="wrap">
+    <p class="eyebrow">⚖️ Devil's advocate</p>
+    <h2 class="section-title">Nepal's model has real limits. Here's what doesn't transfer.</h2>
+    <p class="section-lede">Treating Nepal as a template risks missing the conditions that made its approach work — and that Bangladesh doesn't fully share. These aren't reasons to dismiss the comparison; they're reasons to adapt carefully rather than copy wholesale.</p>
+
+    <div class="da-grid">
+      <div class="da-card">
+        <div class="da-head">
+          <span class="da-icon">⚠️</span>
+          <h3>The remittance model isn't policy</h3>
+        </div>
+        <p class="da-problem">Nepal's ~25% of GDP in remittances was a structural windfall from Gulf labor migration demand — not something any government designed or can replicate through legislation.</p>
+        <p class="da-counter"><span class="da-counter-label">Counter</span> Bangladesh is also a major labor exporter with significant remittance flows. The lesson isn't to copy the mechanism but to recognize that household income gains — however generated — drive nutrition outcomes when health systems are in place. Policy can focus on the health system side.</p>
+      </div>
+      <div class="da-card">
+        <div class="da-head">
+          <span class="da-icon">⚠️</span>
+          <h3>Nepal's peace dividend was luck</h3>
+        </div>
+        <p class="da-problem">A significant part of Nepal's post-2006 acceleration came from being able to finally reach conflict-affected communities — a one-time catch-up effect that has no equivalent in Bangladesh's context.</p>
+        <p class="da-counter"><span class="da-counter-label">Counter</span> Bangladesh has its own version of newly reachable populations: char communities on river islands, haor wetland areas, and hill tracts that remain underserved. Treating these as the equivalent of Nepal's post-conflict zones — and designing targeted outreach accordingly — captures a similar opportunity.</p>
+      </div>
+      <div class="da-card">
+        <div class="da-head">
+          <span class="da-icon">⚠️</span>
+          <h3>CLTS has an equity ceiling</h3>
+        </div>
+        <p class="da-problem">Pure Community-Led Total Sanitation excludes the poorest households who can't afford materials even when they want to comply — and shame-based approaches can stigmatize rather than motivate in some community contexts.</p>
+        <p class="da-counter"><span class="da-counter-label">Counter</span> Nepal recognized this and fixed it in 2011 by adding targeted subsidies to the TBC approach. Bangladesh should adopt the hybrid from the start, not the original CLTS — the lesson is the demand-generation logic, not the no-subsidy purism.</p>
+      </div>
+      <div class="da-card">
+        <div class="da-head">
+          <span class="da-icon">⚠️</span>
+          <h3>26 years is a long time</h3>
+        </div>
+        <p class="da-problem">Nepal's multisectoral approach required roughly two uninterrupted decades to compound — a political durability that's genuinely hard to engineer and that Bangladesh's 2024 transition puts in question.</p>
+        <p class="da-counter"><span class="da-counter-label">Counter</span> Bangladesh has its own track record of long-run program continuity through BRAC and other major NGOs that operate independently of government transitions. Designing the next phase of nutrition programs through these institutions — rather than government ministries alone — builds in the continuity that Nepal achieved through political stability.</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1176,29 +1316,29 @@
   const TRACK_MID = TL_H / 2; // 210px — center axis
 
   const nepalEvents = [
-    { year:1985, title:"Stunting baseline", body:"Nepal's gender parity index for primary school stands at just 0.45 — far fewer girls than boys enrolled — and childhood stunting is among the worst in South Asia." },
-    { year:1990, title:"Democracy restored", body:"The end of the Panchayat system opens political space for donor engagement and evidence-based policymaking, setting the stage for the health and education reforms of the following decade." },
-    { year:1991, title:"National Health Policy", body:"Nepal's 1991 National Health Policy establishes evidence-based priorities for maternal and child health, giving the health workforce a clear mandate and driving improved care-seeking behavior nationwide." },
-    { year:1992, title:"Basic Primary Education Program", body:"BPEP enrolls over one million additional children, closes the primary school gender gap, and lays the groundwork for delayed childbearing — a key downstream driver of reduced stunting." },
-    { year:1997, title:"CLTS first pilots", body:"Community-Led Total Sanitation is piloted as an NGO-led demand-generation approach, shifting from supplying toilets to building communities' own motivation to end open defecation." },
-    { year:2001, title:"Stunting: 51% → declining", body:"Diarrhea incidence stands at 20% and acute respiratory infection at 23%. Both will be cut dramatically by sanitation and health interventions over the next fifteen years." },
-    { year:2006, title:"Peace agreement", body:"The end of the decade-long Maoist conflict restores stability and allows government programs to reach previously inaccessible rural and remote areas, accelerating health gains." },
-    { year:2011, title:"Sanitation Master Plan", body:"Nepal's National Sanitation and Hygiene Master Plan adopts the Total Behavior Change (TBC) approach — expanding CLTS with targeted subsidies tailored to Nepal's geography and culture." },
-    { year:2016, title:"Gender parity achieved", body:"The gender parity index reaches 1.08 (more girls than boys in primary school). Diarrhea incidence has fallen to 8%, respiratory infection to 2%. Stunting drops to 36%." },
-    { year:2022, title:"Stunting: 25%", body:"Nepal achieves a 57% → 25% reduction over 26 years — far exceeding what its per capita income growth would predict, earning recognition as a global 'stunting exemplar.'" },
+    { year:1985, title:"Stunting baseline", body:"Nepal's gender parity index for primary school stands at just 0.45 — far fewer girls than boys enrolled. Culturally, girls were expected to stay home, marry early, and bear children young. This pattern of early marriage and teenage pregnancy was itself a direct driver of low birth weight and childhood stunting. GDP per capita is under $200." },
+    { year:1990, title:"Democracy restored", body:"The People's Movement ends the Panchayat one-party system and restores multiparty democracy. This political opening is critical: it allows international donors and NGOs to engage directly with the government, and creates pressure for social policy reform. Without this moment, the health and education legislation of the early 1990s likely doesn't happen." },
+    { year:1991, title:"National Health Policy", body:"Nepal's first National Health Policy mandates evidence-based priorities for maternal and child health — not just infrastructure spending, but behavioral targets. Critically, it creates a framework for community health workers to operate within, giving frontline workers both legitimacy and direction. This top-down mandate enabling bottom-up delivery is what makes it different from just building clinics." },
+    { year:1992, title:"Basic Primary Education Program", body:"BPEP is explicitly designed to address Nepal's structural gender gap in education, funded by a coalition of donors including the World Bank. It ties funding to enrollment outcomes, not just school construction — a key design choice that made it effective. Building a school that girls don't attend doesn't move the needle; BPEP tracked whether they actually showed up." },
+    { year:1997, title:"CLTS first pilots", body:"Community-Led Total Sanitation arrives from Bangladesh (where it was developed by Kamal Kar) and is adapted for Nepal's hill and mountain communities. Its key cultural insight: shame and collective pride are more powerful motivators than individual incentives. Communities that collectively commit to open-defecation-free status sustain the change; those given free toilets often don't use them." },
+    { year:2001, title:"Stunting: 51%, diarrhea: 20%", body:"At the height of the Maoist civil conflict (1996–2006), Nepal's health metrics are still improving in accessible areas — a testament to how decentralized the programs have become. But remote western provinces like Karnali, already the poorest, are largely cut off from government services during the conflict years, creating the regional disparities that persist to this day." },
+    { year:2006, title:"Peace agreement", body:"The Comprehensive Peace Agreement ends a decade of armed conflict that killed over 17,000 people and displaced hundreds of thousands. Government programs can now reach previously inaccessible communities. International funding, which had been cautious during the conflict, accelerates. The peace dividend is real — but it also masks how much progress had already happened in reachable areas during the conflict years." },
+    { year:2011, title:"Sanitation Master Plan", body:"The National Sanitation and Hygiene Master Plan formalizes what had been a patchwork of NGO-led CLTS pilots into a national program. It adds a key ingredient: targeted subsidies for the poorest households who can't afford even basic latrine construction. This hybrid — demand-led behavior change plus supply-side support for the poorest — addresses the main limitation of pure CLTS, which can exclude the most marginalized." },
+    { year:2016, title:"Gender parity achieved", body:"The gender parity index reaches 1.08 — more girls than boys in primary school, a complete reversal from 0.45 in 1985. This metric matters for stunting because educated women marry later (average age at first marriage rises from 17 to over 20), are more likely to seek antenatal care, and adopt better infant feeding practices. The education investment is paying off one generation later, exactly as intended." },
+    { year:2022, title:"Stunting: 25%", body:"Nepal reaches 25% stunting — a 57% → 25% reduction over 26 years. Andrew Mertens (UC Berkeley) calls Nepal a 'stunting exemplar': it reduced stunting far more than its per capita income growth would predict, suggesting the policy choices — not just economic growth — are the main driver. Karnali province still has 33% stunting, a reminder that national averages hide who gets left behind." },
   ];
 
   const bdEvents = [
-    { year:1990, title:"Female stipend program", body:"Bangladesh's Female Secondary School Assistance Program provides stipends to keep girls in school — one of the region's earliest gender-targeted education investments, with downstream effects on maternal age at first birth." },
-    { year:1994, title:"CARE: Nutrition at the Center", body:"CARE's Nutrition at the Center program, coordinated with the national government plan, targets children under 2 and helps cut stunting in its program areas from 47% to 33%." },
-    { year:1997, title:"National Food & Nutrition Policy", body:"Bangladesh's NFNP — one of South Asia's first — commits to improved breastfeeding rates, micronutrient supplementation for pregnant women, and girls' schooling as a nutrition intervention." },
-    { year:2000, title:"Community health workers scaled", body:"Locally selected, all-female community health worker networks are scaled nationally, providing trusted maternal and child nutrition support at village level — a model that predates and parallels Nepal's community health worker cadre." },
-    { year:2004, title:"Stunting: 51%", body:"Bangladesh's stunting rate at 51% — comparable to Nepal's starting point a decade earlier. The subsequent decade will see rapid decline, but the pace will slow after 2014." },
-    { year:2007, title:"Targeting Ultra-Poor program", body:"The TUP graduation program improves child wasting outcomes not only for direct participants but for non-participating neighboring households — demonstrating the community-level spillovers of poverty-graduation approaches." },
-    { year:2014, title:"Stunting: 37%", body:"A decade of sustained investment cuts stunting from 51% to 37%. But the annual rate of reduction (2.7%) is already below the 3.9% needed to meet the World Health Assembly global target." },
-    { year:2018, title:"Sylhet: 43% stunting", body:"Regional data reveals deep inequality: Sylhet division's stunting rate reaches 43% — nearly double the national average — highlighting how aggregate progress conceals persistent geographic disparities." },
-    { year:2022, title:"Stunting: 24%", body:"Bangladesh reaches 24% — within one percentage point of Nepal's 25%, and a dramatic improvement from 60% in the mid-1990s. The two countries have converged on nearly identical outcomes through different paths." },
-    { year:2024, title:"Political transition", body:"The ousting of Prime Minister Sheikh Hasina leaves nutrition program continuity uncertain mid-transition. Inflation reaches 14.1%, squeezing household food budgets. Foreign aid funding shifts add further instability." },
+    { year:1990, title:"Female stipend program", body:"Bangladesh's Female Secondary School Assistance Program (FSSAP) is one of the most ambitious gender-targeted education programs in South Asia. It pays stipends directly to girls' families to keep daughters in school past primary level — addressing the economic logic that makes families pull girls out early. By the 2000s, Bangladesh achieves gender parity in secondary enrollment, something most comparable countries hadn't done." },
+    { year:1994, title:"CARE: Nutrition at the Center", body:"CARE's Nutrition at the Center program targets children under 2 in selected districts, combining growth monitoring, behavior change communication, and vitamin A supplementation. It works partly because it operates through the existing government health system rather than parallel structures — making it more sustainable and replicable. Stunting in target areas falls from 47% to 33%." },
+    { year:1997, title:"National Food & Nutrition Policy", body:"Bangladesh's NFNP is one of South Asia's first national nutrition policies. Politically, it passes because it's framed around food security (a popular issue) rather than just child health. Culturally, it addresses Bangladesh's rice-dominant diet — recognizing that even food-secure households can be micronutrient-deficient if the diet lacks protein diversity, fish, and vegetables beyond staple rice." },
+    { year:2000, title:"Community health workers scaled", body:"Bangladesh scales its female community health worker network nationally — locally selected women, often from the same village, who make home visits to new mothers. The all-female structure is a deliberate cultural choice: in conservative rural communities, women are more likely to discuss infant feeding, pregnancy, and family planning with another woman than a male health worker. This mirrors what Nepal would later build, but Bangladesh does it first." },
+    { year:2004, title:"Stunting: 51%", body:"Bangladesh's stunting rate at 51% is comparable to where Nepal was a decade earlier. Both countries share similar starting conditions: agrarian economies, rice-dominant diets, high rates of early marriage, and uneven rural health infrastructure. This parallel baseline is part of what makes the comparison meaningful — they're not just geographically proximate, they're structurally similar." },
+    { year:2007, title:"Targeting Ultra-Poor program", body:"BRAC's Targeting the Ultra-Poor (TUP) program provides assets (usually livestock), training, and support to the poorest households — those too poor to benefit from microfinance. Child wasting improves not only among direct participants but in surrounding neighborhoods, likely because household-level income gains ripple out through local food markets and informal sharing networks. Poverty graduation programs work partly through community economics, not just individual transfers." },
+    { year:2014, title:"Stunting: 37%", body:"A decade of investment cuts stunting from 51% to 37% — rapid progress. But the annual rate of reduction (2.7%) is already below the 3.9% pace needed to hit the World Health Assembly target. Analysts point to a 'last mile' problem: the easiest-to-reach households have already benefited; those remaining are harder to serve, poorer, and more geographically isolated. This deceleration is structural, not a policy failure." },
+    { year:2018, title:"Sylhet: 43% stunting", body:"Sylhet's 43% stunting rate — nearly double the national average — reflects a convergence of factors: high rates of male labor migration (leaving women and children with less household support), conservative cultural norms limiting women's mobility and health-seeking, and lower NGO penetration than other divisions. It's a reminder that national programs designed for 'average' conditions often miss the communities with the highest need." },
+    { year:2022, title:"Stunting: 24%", body:"Bangladesh reaches 24%, within one point of Nepal's 25% — a striking convergence given how different their paths have been. Nepal's gains came through top-down policy with strong community delivery; Bangladesh's came through a unique hybrid of government programs, massive NGO infrastructure (BRAC, CARE), and a women's empowerment movement that built social capital alongside health outcomes." },
+    { year:2024, title:"Political transition", body:"Sheikh Hasina's government falls after mass protests, ending 15 years of Awami League rule. The caretaker administration inherits mid-stream nutrition programs, frozen donor relationships, and an economy rattled by 14.1% inflation. History suggests political transitions are the single biggest risk factor for nutrition program continuity — not because the programs are wrong, but because new governments deprioritize inherited initiatives. Nepal navigated its own instability by decentralizing; Bangladesh will need to do the same." },
   ];
 
   function yearToX(year) {
