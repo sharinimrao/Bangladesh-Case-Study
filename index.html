@@ -345,6 +345,139 @@
     .bd-stats-row{grid-template-columns:1fr 1fr;}
   }
 
+  /* ===== TIMELINE ===== */
+  .timeline-section{overflow:hidden; padding-bottom:50px;}
+  .timeline-outer{
+    position:relative;
+    margin-top:44px;
+  }
+  .timeline-scroll{
+    overflow-x:auto;
+    overflow-y:visible;
+    padding:0 40px 20px;
+    cursor:grab;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    scrollbar-color: var(--sage) var(--sage-pale);
+  }
+  .timeline-scroll:active{cursor:grabbing;}
+  .timeline-scroll::-webkit-scrollbar{height:4px;}
+  .timeline-scroll::-webkit-scrollbar-track{background:var(--sage-pale);}
+  .timeline-scroll::-webkit-scrollbar-thumb{background:var(--sage); border-radius:2px;}
+
+  .timeline-inner{
+    position:relative;
+    width:2200px;
+    height:420px;
+    padding-top:20px;
+  }
+
+  /* country labels */
+  .tl-label{
+    position:absolute; left:0;
+    font-family:'JetBrains Mono',monospace; font-size:0.78rem; font-weight:600;
+    letter-spacing:0.05em; text-transform:uppercase;
+    pointer-events:none;
+  }
+  .tl-label-nepal{ top:30px; color:var(--sage); }
+  .tl-label-bd{ bottom:30px; color:#9A5A2E; }
+
+  /* year axis */
+  .tl-axis-labels{position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;}
+
+  /* center line */
+  .tl-center-line{
+    position:absolute;
+    left:0; right:0;
+    top:50%; transform:translateY(-50%);
+    height:2px;
+    background:linear-gradient(90deg, transparent, var(--line) 5%, var(--line) 95%, transparent);
+  }
+
+  /* event dots on center axis */
+  .tl-dot{
+    position:absolute;
+    width:12px; height:12px;
+    border-radius:50%;
+    top:50%; transform:translate(-50%,-50%);
+    cursor:pointer;
+    transition:transform 0.18s ease, box-shadow 0.18s ease;
+    z-index:3;
+  }
+  .tl-dot:hover{transform:translate(-50%,-50%) scale(1.5);}
+  .tl-dot.nepal-dot{background:var(--sage); border:2px solid var(--moss);}
+  .tl-dot.bd-dot{background:var(--terra); border:2px solid #7A4020;}
+
+  /* connector lines from dot to card */
+  .tl-connector{
+    position:absolute;
+    left:0; width:1.5px;
+    pointer-events:none;
+    z-index:2;
+  }
+  .tl-connector.nepal-conn{background:var(--sage); opacity:0.5;}
+  .tl-connector.bd-conn{background:var(--terra); opacity:0.5;}
+
+  /* event cards */
+  .tl-card{
+    position:absolute;
+    width:170px;
+    background:var(--white);
+    border-radius:12px;
+    padding:12px 14px;
+    cursor:pointer;
+    transition:transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    z-index:4;
+    border:1px solid var(--line);
+  }
+  .tl-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 24px rgba(63,79,57,0.13);
+  }
+  .tl-card.nepal-card{border-top:3px solid var(--sage);}
+  .tl-card.bd-card{border-bottom:3px solid var(--terra);}
+  .tl-card-year{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; font-weight:700;
+    margin-bottom:4px;
+  }
+  .nepal-card .tl-card-year{color:var(--sage);}
+  .bd-card .tl-card-year{color:#9A5A2E;}
+  .tl-card-title{font-size:0.82rem; font-weight:600; color:var(--moss-deep); line-height:1.3;}
+
+  /* detail popup */
+  .tl-detail{
+    display:none;
+    position:relative;
+    margin:24px auto 0;
+    max-width:640px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:28px 32px 26px;
+    box-shadow:0 12px 40px rgba(63,79,57,0.1);
+  }
+  .tl-detail.visible{display:block;}
+  .tl-detail-close{
+    position:absolute; top:14px; right:16px;
+    background:none; border:none; cursor:pointer;
+    font-size:1.1rem; color:var(--sage);
+  }
+  .tl-detail-year{
+    font-family:'JetBrains Mono',monospace; font-size:0.82rem; font-weight:700;
+  }
+  .tl-detail-title{font-size:1.2rem; margin:6px 0 12px;}
+  .tl-detail-body{font-size:0.97rem; color:#54614C; line-height:1.6;}
+
+  /* scroll hint */
+  .tl-scroll-hint{
+    position:absolute; right:20px; bottom:-30px;
+    font-size:0.78rem; color:var(--sage);
+    font-family:'JetBrains Mono',monospace;
+    opacity:1; transition:opacity 0.4s ease;
+    pointer-events:none;
+  }
+  .tl-scroll-hint.hidden{opacity:0;}
+
   /* ===== SUMMARY SECTION ===== */
   .summary-band{
     background:
@@ -585,6 +718,7 @@
   <div class="sidebar-nav">
     <a href="#hero"><span class="emoji">🌱</span><span>Start here<span class="nav-sub">The two rivers</span></span></a>
     <a href="#nepal-overview"><span class="emoji">🏔️</span><span>Nepal's turnaround<span class="nav-sub">1996 → 2022</span></span></a>
+    <a href="#timeline"><span class="emoji">📅</span><span>Timeline<span class="nav-sub">40 years side by side</span></span></a>
     <a href="#health"><span class="emoji">🏥</span><span>Health systems<span class="nav-sub">Workers, policy, care</span></span></a>
     <a href="#education"><span class="emoji">📚</span><span>Education<span class="nav-sub">Schooling & later marriage</span></span></a>
     <a href="#sanitation"><span class="emoji">💧</span><span>Sanitation<span class="nav-sub">CLTS & toilets</span></span></a>
@@ -664,6 +798,48 @@
         <p>Labor migration sent home remittances worth a quarter of GDP, funding more nutritious diets and better health-seeking behavior.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ TIMELINE ============ -->
+<section id="timeline" class="band alt timeline-section">
+  <div class="wrap">
+    <p class="eyebrow">📅 Historical context</p>
+    <h2 class="section-title">Forty years of policy, side by side.</h2>
+    <p class="section-lede">Both countries were legislating, building, and experimenting at the same time — often with the same problems, through different institutions. Scroll to explore. Click any event for detail.</p>
+  </div>
+
+  <div class="timeline-outer">
+    <div class="timeline-scroll" id="timelineScroll">
+      <div class="timeline-inner" id="timelineInner">
+
+        <!-- year axis labels -->
+        <div class="tl-axis-labels" id="tlAxisLabels"></div>
+
+        <!-- Nepal track (top) -->
+        <div class="tl-label tl-label-nepal">🇳🇵 Nepal</div>
+        <div class="tl-track tl-track-nepal" id="trackNepal"></div>
+
+        <!-- center axis line -->
+        <div class="tl-center-line" id="tlCenterLine"></div>
+        <div class="tl-center-dots" id="tlCenterDots"></div>
+
+        <!-- Bangladesh track (bottom) -->
+        <div class="tl-track tl-track-bd" id="trackBd"></div>
+        <div class="tl-label tl-label-bd">🇧🇩 Bangladesh</div>
+
+      </div>
+    </div>
+    <!-- scroll hint -->
+    <div class="tl-scroll-hint" id="tlScrollHint">Scroll to explore →</div>
+  </div>
+
+  <!-- detail popup -->
+  <div class="tl-detail" id="tlDetail" aria-live="polite">
+    <button class="tl-detail-close" id="tlDetailClose" aria-label="Close">✕</button>
+    <span class="tl-detail-year" id="tlDetailYear"></span>
+    <h3 class="tl-detail-title" id="tlDetailTitle"></h3>
+    <p class="tl-detail-body" id="tlDetailBody"></p>
   </div>
 </section>
 
@@ -993,6 +1169,174 @@
   overlay.addEventListener('click', closeSidebar);
   document.querySelectorAll('.sidebar-nav a').forEach(a => a.addEventListener('click', closeSidebar));
   document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeSidebar(); });
+
+  // ============ TIMELINE ============
+  const TL_START = 1985, TL_END = 2025, TL_WIDTH = 2200;
+  const TL_H = 420;
+  const TRACK_MID = TL_H / 2; // 210px — center axis
+
+  const nepalEvents = [
+    { year:1985, title:"Stunting baseline", body:"Nepal's gender parity index for primary school stands at just 0.45 — far fewer girls than boys enrolled — and childhood stunting is among the worst in South Asia." },
+    { year:1990, title:"Democracy restored", body:"The end of the Panchayat system opens political space for donor engagement and evidence-based policymaking, setting the stage for the health and education reforms of the following decade." },
+    { year:1991, title:"National Health Policy", body:"Nepal's 1991 National Health Policy establishes evidence-based priorities for maternal and child health, giving the health workforce a clear mandate and driving improved care-seeking behavior nationwide." },
+    { year:1992, title:"Basic Primary Education Program", body:"BPEP enrolls over one million additional children, closes the primary school gender gap, and lays the groundwork for delayed childbearing — a key downstream driver of reduced stunting." },
+    { year:1997, title:"CLTS first pilots", body:"Community-Led Total Sanitation is piloted as an NGO-led demand-generation approach, shifting from supplying toilets to building communities' own motivation to end open defecation." },
+    { year:2001, title:"Stunting: 51% → declining", body:"Diarrhea incidence stands at 20% and acute respiratory infection at 23%. Both will be cut dramatically by sanitation and health interventions over the next fifteen years." },
+    { year:2006, title:"Peace agreement", body:"The end of the decade-long Maoist conflict restores stability and allows government programs to reach previously inaccessible rural and remote areas, accelerating health gains." },
+    { year:2011, title:"Sanitation Master Plan", body:"Nepal's National Sanitation and Hygiene Master Plan adopts the Total Behavior Change (TBC) approach — expanding CLTS with targeted subsidies tailored to Nepal's geography and culture." },
+    { year:2016, title:"Gender parity achieved", body:"The gender parity index reaches 1.08 (more girls than boys in primary school). Diarrhea incidence has fallen to 8%, respiratory infection to 2%. Stunting drops to 36%." },
+    { year:2022, title:"Stunting: 25%", body:"Nepal achieves a 57% → 25% reduction over 26 years — far exceeding what its per capita income growth would predict, earning recognition as a global 'stunting exemplar.'" },
+  ];
+
+  const bdEvents = [
+    { year:1990, title:"Female stipend program", body:"Bangladesh's Female Secondary School Assistance Program provides stipends to keep girls in school — one of the region's earliest gender-targeted education investments, with downstream effects on maternal age at first birth." },
+    { year:1994, title:"CARE: Nutrition at the Center", body:"CARE's Nutrition at the Center program, coordinated with the national government plan, targets children under 2 and helps cut stunting in its program areas from 47% to 33%." },
+    { year:1997, title:"National Food & Nutrition Policy", body:"Bangladesh's NFNP — one of South Asia's first — commits to improved breastfeeding rates, micronutrient supplementation for pregnant women, and girls' schooling as a nutrition intervention." },
+    { year:2000, title:"Community health workers scaled", body:"Locally selected, all-female community health worker networks are scaled nationally, providing trusted maternal and child nutrition support at village level — a model that predates and parallels Nepal's community health worker cadre." },
+    { year:2004, title:"Stunting: 51%", body:"Bangladesh's stunting rate at 51% — comparable to Nepal's starting point a decade earlier. The subsequent decade will see rapid decline, but the pace will slow after 2014." },
+    { year:2007, title:"Targeting Ultra-Poor program", body:"The TUP graduation program improves child wasting outcomes not only for direct participants but for non-participating neighboring households — demonstrating the community-level spillovers of poverty-graduation approaches." },
+    { year:2014, title:"Stunting: 37%", body:"A decade of sustained investment cuts stunting from 51% to 37%. But the annual rate of reduction (2.7%) is already below the 3.9% needed to meet the World Health Assembly global target." },
+    { year:2018, title:"Sylhet: 43% stunting", body:"Regional data reveals deep inequality: Sylhet division's stunting rate reaches 43% — nearly double the national average — highlighting how aggregate progress conceals persistent geographic disparities." },
+    { year:2022, title:"Stunting: 24%", body:"Bangladesh reaches 24% — within one percentage point of Nepal's 25%, and a dramatic improvement from 60% in the mid-1990s. The two countries have converged on nearly identical outcomes through different paths." },
+    { year:2024, title:"Political transition", body:"The ousting of Prime Minister Sheikh Hasina leaves nutrition program continuity uncertain mid-transition. Inflation reaches 14.1%, squeezing household food budgets. Foreign aid funding shifts add further instability." },
+  ];
+
+  function yearToX(year) {
+    return ((year - TL_START) / (TL_END - TL_START)) * (TL_WIDTH - 120) + 60;
+  }
+
+  function buildTimeline() {
+    const inner = document.getElementById('timelineInner');
+    const axisLabels = document.getElementById('tlAxisLabels');
+    const centerDots = document.getElementById('tlCenterDots');
+
+    // Year tick marks and labels
+    for (let y = 1985; y <= 2025; y += 5) {
+      const x = yearToX(y);
+      const tick = document.createElement('div');
+      tick.style.cssText = `position:absolute; left:${x}px; top:${TRACK_MID - 8}px; width:1px; height:16px; background:var(--line); pointer-events:none;`;
+      axisLabels.appendChild(tick);
+      const lbl = document.createElement('div');
+      lbl.textContent = y;
+      lbl.style.cssText = `position:absolute; left:${x}px; top:${TRACK_MID + 12}px; transform:translateX(-50%); font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--sage); pointer-events:none;`;
+      axisLabels.appendChild(lbl);
+    }
+
+    // Nepal events — cards above center
+    nepalEvents.forEach((ev, i) => {
+      const x = yearToX(ev.year);
+      const CARD_H = 70;
+      const stagger = (i % 2 === 0) ? 90 : 145; // alternate heights to avoid overlap
+      const cardTop = TRACK_MID - stagger - CARD_H;
+
+      // dot
+      const dot = document.createElement('div');
+      dot.className = 'tl-dot nepal-dot';
+      dot.style.left = x + 'px';
+      dot.setAttribute('aria-label', `Nepal ${ev.year}: ${ev.title}`);
+      dot.setAttribute('role', 'button');
+      dot.setAttribute('tabindex', '0');
+      inner.appendChild(dot);
+
+      // connector
+      const conn = document.createElement('div');
+      conn.className = 'tl-connector nepal-conn';
+      const connTop = cardTop + CARD_H;
+      conn.style.cssText = `left:${x}px; top:${connTop}px; height:${TRACK_MID - connTop - 6}px;`;
+      inner.appendChild(conn);
+
+      // card
+      const card = document.createElement('div');
+      card.className = 'tl-card nepal-card';
+      card.style.cssText = `left:${x - 85}px; top:${cardTop}px;`;
+      card.innerHTML = `<div class="tl-card-year">${ev.year}</div><div class="tl-card-title">${ev.title}</div>`;
+      card.setAttribute('role','button');
+      card.setAttribute('tabindex','0');
+      inner.appendChild(card);
+
+      const openDetail = () => showDetail(ev, 'nepal');
+      card.addEventListener('click', openDetail);
+      card.addEventListener('keydown', e => { if(e.key==='Enter') openDetail(); });
+      dot.addEventListener('click', openDetail);
+      dot.addEventListener('keydown', e => { if(e.key==='Enter') openDetail(); });
+    });
+
+    // Bangladesh events — cards below center
+    bdEvents.forEach((ev, i) => {
+      const x = yearToX(ev.year);
+      const CARD_H = 70;
+      const stagger = (i % 2 === 0) ? 90 : 145;
+      const cardTop = TRACK_MID + stagger;
+
+      const dot = document.createElement('div');
+      dot.className = 'tl-dot bd-dot';
+      dot.style.left = x + 'px';
+      dot.setAttribute('aria-label', `Bangladesh ${ev.year}: ${ev.title}`);
+      dot.setAttribute('role','button');
+      dot.setAttribute('tabindex','0');
+      inner.appendChild(dot);
+
+      const conn = document.createElement('div');
+      conn.className = 'tl-connector bd-conn';
+      conn.style.cssText = `left:${x}px; top:${TRACK_MID + 6}px; height:${cardTop - TRACK_MID - 6}px;`;
+      inner.appendChild(conn);
+
+      const card = document.createElement('div');
+      card.className = 'tl-card bd-card';
+      card.style.cssText = `left:${x - 85}px; top:${cardTop}px;`;
+      card.innerHTML = `<div class="tl-card-year">${ev.year}</div><div class="tl-card-title">${ev.title}</div>`;
+      card.setAttribute('role','button');
+      card.setAttribute('tabindex','0');
+      inner.appendChild(card);
+
+      const openDetail = () => showDetail(ev, 'bd');
+      card.addEventListener('click', openDetail);
+      card.addEventListener('keydown', e => { if(e.key==='Enter') openDetail(); });
+      dot.addEventListener('click', openDetail);
+      dot.addEventListener('keydown', e => { if(e.key==='Enter') openDetail(); });
+    });
+  }
+
+  function showDetail(ev, country) {
+    const detail = document.getElementById('tlDetail');
+    document.getElementById('tlDetailYear').textContent = ev.year;
+    document.getElementById('tlDetailYear').style.color = country === 'nepal' ? 'var(--sage)' : '#9A5A2E';
+    document.getElementById('tlDetailTitle').textContent = ev.title;
+    document.getElementById('tlDetailBody').textContent = ev.body;
+    detail.classList.add('visible');
+    detail.scrollIntoView({ behavior:'smooth', block:'nearest' });
+  }
+
+  document.getElementById('tlDetailClose').addEventListener('click', () => {
+    document.getElementById('tlDetail').classList.remove('visible');
+  });
+
+  // drag to scroll
+  const scroll = document.getElementById('timelineScroll');
+  let isDown = false, startX, scrollLeft;
+  scroll.addEventListener('mousedown', e => {
+    isDown = true; scroll.style.cursor = 'grabbing';
+    startX = e.pageX - scroll.offsetLeft;
+    scrollLeft = scroll.scrollLeft;
+  });
+  scroll.addEventListener('mouseleave', () => { isDown = false; scroll.style.cursor = 'grab'; });
+  scroll.addEventListener('mouseup', () => { isDown = false; scroll.style.cursor = 'grab'; });
+  scroll.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scroll.offsetLeft;
+    scroll.scrollLeft = scrollLeft - (x - startX) * 1.2;
+  });
+
+  // hide scroll hint once user scrolls
+  scroll.addEventListener('scroll', () => {
+    if (scroll.scrollLeft > 30) {
+      document.getElementById('tlScrollHint').classList.add('hidden');
+    }
+  }, { passive: true });
+
+  buildTimeline();
+
 </script>
 
 </body>
